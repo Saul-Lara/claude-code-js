@@ -1,4 +1,7 @@
+import dotenv from "dotenv";
 import OpenAI from "openai";
+
+dotenv.config();
 
 async function main() {
   const [, , flag, prompt] = process.argv;
@@ -9,6 +12,7 @@ async function main() {
   if (!apiKey) {
     throw new Error("OPENROUTER_API_KEY is not set");
   }
+
   if (flag !== "-p" || !prompt) {
     throw new Error("error: -p flag is required");
   }
@@ -19,7 +23,7 @@ async function main() {
   });
 
   const response = await client.chat.completions.create({
-    model: "anthropic/claude-haiku-4.5",
+    model: process.env.MODEL_NAME?.trim() || "anthropic/claude-haiku-4.5",
     messages: [{ role: "user", content: prompt }],
   });
 
@@ -30,8 +34,7 @@ async function main() {
   // You can use print statements as follows for debugging, they'll be visible when running tests.
   console.error("Logs from your program will appear here!");
 
-  // TODO: Uncomment the lines below to pass the first stage
-  // console.log(response.choices[0].message.content);
+  console.log(response.choices[0].message.content);
 }
 
 main();
