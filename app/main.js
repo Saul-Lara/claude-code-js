@@ -1,7 +1,7 @@
 import dotenv from "dotenv";
 import OpenAI from "openai";
 
-dotenv.config();
+dotenv.config({ quiet: true });
 
 async function main() {
   const [, , flag, prompt] = process.argv;
