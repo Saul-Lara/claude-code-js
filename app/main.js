@@ -1,5 +1,6 @@
 import dotenv from "dotenv";
 import OpenAI from "openai";
+import fs from 'fs';
 
 dotenv.config({ quiet: true });
 
@@ -53,7 +54,29 @@ async function main() {
   // You can use print statements as follows for debugging, they'll be visible when running tests.
   console.error("Logs from your program will appear here!");
 
-  console.log(response.choices[0].message.content);
+  // Check if the message contains tool_calls
+  let toolCalls = response.choices?.[0]?.message?.tool_calls;
+
+  if (Array.isArray(toolCalls) && toolCalls.length > 0) {
+    let [{ function: functionToolCall }] = toolCalls;
+
+    let functionName = functionToolCall?.name;
+    let functionArgs = JSON.parse(functionToolCall?.arguments);
+
+    if (functionName == "Read") {
+      let filePath = functionArgs.file_path;
+
+      if (!fs.existsSync(filePath)) {
+        throw new Error(`File not found at: ${filePath}`);
+      }
+
+      let fileContent = fs.readFileSync(filePath, 'utf8');
+      console.log(fileContent);
+    }
+
+  } else {
+    console.log(response.choices[0].message.content);
+  }
 }
 
 main();
