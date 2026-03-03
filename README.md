@@ -1,18 +1,19 @@
 [![progress-banner](https://backend.codecrafters.io/progress/claude-code/93fef503-5a2a-45a8-8d5d-a497092420f1)](https://app.codecrafters.io/users/codecrafters-bot?r=2qF)
 
-This is a starting point for JavaScript solutions to the
-["Build Your own Claude Code" Challenge](https://codecrafters.io/challenges/claude-code).
+# 🤖 Claude Code (JS)
 
-Claude Code is an AI coding assistant that uses Large Language Models (LLMs) to
-understand code and perform actions through tool calls. In this challenge,
-you'll build your own Claude Code from scratch by implementing an LLM-powered
-coding assistant.
+![GitHub repo size](https://img.shields.io/github/repo-size/Saul-Lara/claude-code-js?style=for-the-badge)
+![GitHub license](https://img.shields.io/github/license/Saul-Lara/claude-code-js?style=for-the-badge)
+![GitHub last commit](https://img.shields.io/github/last-commit/Saul-Lara/claude-code-js?color=green&style=for-the-badge)
 
-Along the way you'll learn about HTTP RESTful APIs, OpenAI-compatible tool
-calling, agent loop, and how to integrate multiple tools into an AI assistant.
+This repository is a JavaScript implementation for the ["Build Your Own Claude Code"](https://codecrafters.io/challenges/claude-code) challenge.
 
-**Note**: If you're viewing this repo on GitHub, head over to
-[codecrafters.io](https://codecrafters.io) to try the challenge.
+Claude Code is an AI coding assistant that uses Large Language Models (LLMs) to understand code and perform actions through tool calls.
+
+This project implements the core architecture of an LLM-powered coding agent, exploring HTTP RESTful APIs, OpenAI-compatible tool calling, agent loop, and how to integrate multiple tools into an AI assistant.
+
+> [!NOTE]
+> 🧪 Try the challenge yourself on [codecrafters.io](https://codecrafters.io)!
 
 # Passing the first stage
 
