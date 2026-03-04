@@ -1,6 +1,6 @@
 import dotenv from "dotenv";
 import OpenAI from "openai";
-import fs from 'fs';
+import { readToolSchema, executeReadTool } from './tools/readTool.js'
 
 dotenv.config({ quiet: true });
 
@@ -27,25 +27,7 @@ async function main() {
     // Setting up the AI Model
     const aiModel = process.env.MODEL_NAME?.trim() || "anthropic/claude-haiku-4.5";
     let messages = [{ role: "user", content: prompt }]
-    let tools = [
-      {
-        "type": "function",
-        "function": {
-          "name": "Read",
-          "description": "Read and return the contents of a file",
-          "parameters": {
-            "type": "object",
-            "properties": {
-              "file_path": {
-                "type": "string",
-                "description": "The path to the file to read"
-              }
-            },
-            "required": ["file_path"]
-          }
-        }
-      }
-    ]
+    let tools = [readToolSchema]
 
     // You can use print statements as follows for debugging, they'll be visible when running tests.
     console.error("Logs from your program will appear here!");
@@ -68,26 +50,13 @@ async function main() {
       messages.push(responseMessage);
 
       if (Array.isArray(toolCalls) && toolCalls.length > 0) {
-        let [{ id: toolCallsId, function: functionToolCall }] = toolCalls;
+        let [{ id: toolCallId, function: functionToolCall }] = toolCalls;
 
         let functionName = functionToolCall?.name;
         let functionArgs = JSON.parse(functionToolCall?.arguments);
 
         if (functionName == "Read") {
-          let filePath = functionArgs.file_path;
-
-          if (!fs.existsSync(filePath)) {
-            throw new Error(`File not found at: ${filePath}`);
-          }
-
-          let fileContent = fs.readFileSync(filePath, 'utf8');
-
-          let toolCallResult = {
-            "role": "tool",
-            "tool_call_id": toolCallsId,
-            "content": fileContent
-          }
-
+          let toolCallResult = executeReadTool(toolCallId, functionArgs.file_path);
           messages.push(toolCallResult);
         }
 
