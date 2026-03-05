@@ -15,6 +15,20 @@ This project implements the core architecture of an LLM-powered coding agent, ex
 > [!NOTE]
 > 🧪 Try the challenge yourself on [codecrafters.io](https://codecrafters.io)!
 
+
+## :pushpin: Features
+
+:white_check_mark: LLM API integration (OpenAI-compatible)
+:white_check_mark: Agent loop for multi-step reasoning
+:white_check_mark: Tool calling with structured JSON schemas
+:white_check_mark: Read file tool for accessing local project files
+:white_check_mark: Write file tool for creating and updating files
+:white_check_mark: Bash tool for executing shell commands
+:white_check_mark: Environment-based model configuration (`.env`)
+:white_check_mark: Modular tool system for adding new capabilities
+:white_check_mark: Error handling for missing files and tool failures
+:white_check_mark: Lightweight implementation focused on learning AI agent architecture
+
 # Passing the first stage
 
 The entry point for your `claude-code` implementation is in `app/main.js`. Study
