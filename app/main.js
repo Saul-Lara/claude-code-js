@@ -2,6 +2,7 @@ import dotenv from "dotenv";
 import OpenAI from "openai";
 import { readToolSchema, executeReadTool } from './tools/readTool.js';
 import { writeToolSchema, executeWriteTool } from './tools/writeTool.js';
+import { bashToolSchema, executeBashTool } from './tools/bashTool.js';
 
 dotenv.config({ quiet: true });
 
@@ -28,7 +29,7 @@ async function main() {
     // Setting up the AI Model
     const aiModel = process.env.MODEL_NAME?.trim() || "anthropic/claude-haiku-4.5";
     let messages = [{ role: "user", content: prompt }];
-    let tools = [readToolSchema, writeToolSchema];
+    let tools = [readToolSchema, writeToolSchema, bashToolSchema];
 
     // You can use print statements as follows for debugging, they'll be visible when running tests.
     console.error("Logs from your program will appear here!");
@@ -61,6 +62,8 @@ async function main() {
           toolCallResult = executeReadTool(toolCallId, functionArgs.file_path);
         } else if (functionName == "Write") {
           toolCallResult = executeWriteTool(toolCallId, functionArgs.file_path, functionArgs.content);
+        } else if (functionName == "Bash") {
+          toolCallResult = await executeBashTool(toolCallId, functionArgs.command);
         }
 
         messages.push(toolCallResult);
